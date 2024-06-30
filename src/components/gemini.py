@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import re
 import os
 import sys
@@ -52,6 +53,32 @@ class Gemini:
         self.db = MssqlDB(self.mssql_config.mssql_product)
     
     def gemini_api_vision_pro(self):
+=======
+import os
+import sys
+import pandas as pd
+import numpy as np
+from dataclasses import dataclass
+from src.exception import NerException
+from src.logger import logging
+import tqdm
+import time
+import json
+from src.entity.config_entity import  Mssql,Env
+
+import google.generativeai as genai
+import requests
+
+
+@dataclass
+class Gemini:
+
+    def __init__(self,google_api: Env,mssql_config: Mssql):
+        self.mssql_config = mssql_config
+        
+
+    def gemini_api(self):
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
         """
         Apply gemini api and call it later in prompt section with image input for response.
         """
@@ -63,11 +90,16 @@ class Gemini:
             genai.configure(api_key=self.api_key)
             
             #Define which model we are going to use
+<<<<<<< HEAD
             gemini_model = genai.GenerativeModel(self.google_api.model_name_vision_pro)
+=======
+            gemini_model = genai.GenerativeModel(self.google_api.model_name)
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             logging.info(f"Gemini model configured: {gemini_model}")
             
             #return model
             return gemini_model
+<<<<<<< HEAD
         except Exception as e:
             logging.error(f"Failed to configure Gemini API: {e}")
             
@@ -359,10 +391,25 @@ class Gemini:
             logging.error(f"An error occurred: {e}")
             raise e
             
+=======
+        
+        except Exception as e:
+            logging.error(f"Failed to configure Gemini API: {e}")
+            
+            NerException(e,sys)
+        
+
+    def read_sql(self):
+        pass
+
+    def query(self):
+        pass
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
 
     def clean_data(self):
         pass
 
+<<<<<<< HEAD
     def insert_or_update_extracted_values(self):
         pass
     
@@ -376,12 +423,26 @@ class Gemini:
             # Call gemini API function to get the GEMINI model
             self.gemini_api_vision_pro()
             self.gemini_api_pro()
+=======
+    def insert_data(self):
+        pass
+
+    def fetch_column_name(self):
+        pass
+
+    def initiate_data(self,table_name,supplier_id):
+
+        try:
+            # Call gemini API function to get the GEMINI model
+            self.gemini_api_key()
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
 
             # Initialize an empty list to store DataFrame outputs
             df_list = []
 
             # Define the SQL query with dynamic table name and supplier ID
             query = f"""
+<<<<<<< HEAD
                     SELECT * FROM {self.db_name}.{table_name} where id = {supplier_id};
                     """
             print(query)
@@ -442,3 +503,17 @@ class Gemini:
             raise e
 
     
+=======
+                    SELECT TOP (500) * 
+                    FROM {table_name} 
+                    WHERE supplierId = '{supplier_id}' 
+                    AND status = 1  AND isDeleted = 0 AND  ( geminiStatus = 0 or geminiStatus is NULL) AND isDuplicateBarcode = 0 AND isEnhanced = 1 AND uniqueId IS NOT NULL AND Parent_SKU NOT LIKE '-P'
+                    """
+            #print(query)
+
+            # Read data from MSSQL and append it to the list
+            df_data = self.read_data_from_mssql(query)
+            df_list.append(df_data)
+        except Exception as e:
+            raise e
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492

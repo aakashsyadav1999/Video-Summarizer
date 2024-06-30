@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+<<<<<<< HEAD
 import pymssql
 from concurrent.futures import ThreadPoolExecutor
 from src.entity.config_entity import Mssql
@@ -7,6 +8,12 @@ import pyodbc
 from src.logger import logging
 import mysql.connector
 
+=======
+from concurrent.futures import ThreadPoolExecutor
+from src.entity.config_entity import Mssql
+import mysql.connector
+from src.logger import logging
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
 
 
 load_dotenv()
@@ -122,6 +129,7 @@ class MssqlDB:
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
@@ -129,25 +137,54 @@ class MssqlDB:
             cursor = conn.cursor()
             cursor.execute(query)
             
+=======
+            # Connect to the MySQL database using environment variables for security
+            conn = mysql.connector.connect(
+                host=os.environ["MYSQL_HOST"],
+                user=os.environ["MYSQL_USER"],
+                password=os.environ["MYSQL_PASSWORD"],
+                database=self.dbname
+            )
+
+            cursor = conn.cursor()
+            cursor.execute(query)
+
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             column_names = [desc[0] for desc in cursor.description]
 
             for row in cursor.fetchall():
                 data.append(dict(zip(column_names, row)))
 
+<<<<<<< HEAD
+=======
+        except mysql.connector.Error as err:
+            print("Error fetching data:", err)  # Log or handle the error appropriately
+
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
         finally:
             if cursor:
                 cursor.close()
             if conn:
                 conn.close()
+<<<<<<< HEAD
+=======
+
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
         return data
     def _execute_query_1(self, query, params=None):
         data = []
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                user=os.environ["user"],
+                                password=os.environ["password"],
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
                                 database=self.dbname)
             cursor = conn.cursor()
             if params:
@@ -168,9 +205,15 @@ class MssqlDB:
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                user=os.environ["user"],
+                                password=os.environ["password"],
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
                                 database=self.dbname)
             cursor = conn.cursor()
             cursor.execute(query, params)
@@ -187,10 +230,17 @@ class MssqlDB:
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
                                 database=self.dbname)
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                   user=os.environ["user"],
+                                   password=os.environ["password"],
+                                   database=self.dbname)
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
@@ -205,10 +255,17 @@ class MssqlDB:
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
                                 database=self.dbname)
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                   user=os.environ["user"],
+                                   password=os.environ["password"],
+                                   database=self.dbname)
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             cursor = conn.cursor()
             cursor.execute(query, params)
             conn.commit()
@@ -229,15 +286,25 @@ class MssqlDB:
             self.connection.rollback()
             raise
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
     def _execute_insert_many(self, query, value):
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
                                 database=self.dbname)
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                   user=os.environ["user"],
+                                   password=os.environ["password"],
+                                   database=self.dbname)
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             cursor = conn.cursor()
             cursor.executemany(query, value)
             conn.commit()
@@ -254,10 +321,17 @@ class MssqlDB:
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
                                 database=self.dbname)
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                   user=os.environ["user"],
+                                   password=os.environ["password"],
+                                   database=self.dbname)
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             cursor = conn.cursor()
             cursor.executemany(query, value)
             for each_data in cursor:
@@ -273,10 +347,17 @@ class MssqlDB:
         conn = None
         cursor = None
         try:
+<<<<<<< HEAD
             conn = mysql.connector.connect(host=os.environ["LOCAL_HOST"],
                                 user=os.environ["USER"],
                                 password=os.environ["PASSWORD"],
                                 database=self.dbname)
+=======
+            conn = pymssql.connect(server=os.environ["server"],
+                                   user=os.environ["user"],
+                                   password=os.environ["password"],
+                                   database=self.dbname)
+>>>>>>> e687f0fa7b4d2b77dead3e19683877fe8cbbe492
             cursor = conn.cursor()
             cursor.execute(query)
             value_exists = cursor.fetchone() is not None

@@ -1,0 +1,15 @@
+virtualenv
+google-generativeai
+setuptools
+pymssql
+python-dotenv
+pandas
+tqdm
+requests
+Pillow
+pyodbc
+mysql
+mysql-connector-python
+youtube_transcript_api
+
+-e .
